@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 245 241 232;   /* #F5F1E8 */
+  --text: 31 41 55;            /* #1F2937 */
+  --primary: 31 77 62;         /* #1F4D3E */
+  --muted: 107 114 128;        /* #6B7280 */
+}
+
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  @apply transition-all duration-300;
+}
+
+/* 🌾 Grain Texture */
+.bg-grain {
+  position: relative;
+  background-color: rgb(var(--background));
+}
+
+/* dotted texture */
+.bg-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 6px 6px; /* controls density */
+  opacity: 0.4;
+  pointer-events: none;
+}
+
