@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginService } from "../services/auth.service";
 import useAuthStore from "../store/authStore";
 import toast from "react-hot-toast";
+import { FaApple, FaGoogle } from "react-icons/fa";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -54,10 +55,10 @@ export default function Login() {
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="absolute bottom-12 left-12 text-white max-w-md">
-          <p className="text-xl italic leading-relaxed">
+          <p className="text-2xl font-lora font-semibold leading-relaxed">
             “Not all those who wander are lost — but the ones who write it down remember the way home.”
           </p>
-          <p className="mt-3 text-sm opacity-80">
+          <p className="mt-3 text-md opacity-80">
             — FIELD NOTES, VOL. 04
           </p>
         </div>
@@ -67,25 +68,25 @@ export default function Login() {
       <div className="w-full lg:w-1/2 relative flex items-center justify-center px-6 py-16 sm:px-12 bg-grain">
         <div className="w-full max-w-md">
 
-          <p className="text-sm text-muted mb-2 tracking-widest">
+          <p className="text-xs text-muted font-nunito mb-2 tracking-widest">
             WELCOME BACK
           </p>
 
-          <h1 className="text-4xl font-serif font-semibold mb-3">
+          <h1 className="text-4xl font-lora font-[400] mb-3">
             Pick up where the trail left off.
           </h1>
 
-          <p className="text-muted mb-6">
+          <p className="text-muted font-nunito mb-6">
             Sign in to revisit your journals and follow fellow travelers.
           </p>
 
           {/* SOCIAL BUTTONS */}
-          <div className="flex gap-4 mb-6">
-            <button className="flex-1 border rounded-full py-2 text-sm">
-              Google
+          <div className="flex justify-evenly gap-4 mb-6">
+            <button className="flex items-center border bg-white rounded-full py-3 px-16 gap-1 text-sm">
+              <FaGoogle /> Google
             </button>
-            <button className="flex-1 border rounded-full py-2 text-sm">
-              Apple
+            <button className="flex items-center border bg-white rounded-full py-3 px-16 gap-1 text-sm">
+              <FaApple /> Apple
             </button>
           </div>
 

@@ -46,11 +46,11 @@ export default function Register() {
         <div className="absolute inset-0 bg-black/30" />
 
         <div className="absolute bottom-12 left-12 text-white max-w-md">
-          <p className="text-xl italic leading-relaxed">
+          <p className="text-2xl font-lora font-semibold  leading-relaxed">
             “The world is a book and those who do not travel read only one page.”
           </p>
-          <p className="mt-3 text-sm opacity-80">
-            — St. Augustine
+          <p className="mt-3 text-md opacity-80">
+            — AUGUSTINE OF HIPPO
           </p>
         </div>
       </div>
@@ -59,13 +59,17 @@ export default function Register() {
       <div className="w-full lg:w-1/2 relative flex items-center justify-center px-6 py-16 sm:px-12 bg-grain">
         <div className="w-full max-w-md z-10">
 
-          <p className="text-sm text-muted mb-2 tracking-widest">
+          <p className="text-xs font-nunito text-muted mb-2 tracking-widest">
             START YOUR JOURNEY
           </p>
 
-          <h1 className="text-4xl font-serif font-semibold mb-6">
-            Create your Trail&Tales account
+          <h1 className="text-4xl font-lora font-[400] mb-6">
+            Every great trip starts with a blank page.
           </h1>
+
+          <p className="text-muted font-nunito mb-6">
+            Create your field journal — free, always, for the curious kind.
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
 

@@ -2,8 +2,9 @@ import api from "../api/axios";
 
 // ✅ CRUD
 export const createJournalService = (data) => {
-  return api.post("/journals", data);
+  return api.post("/journals", data );
 };
+
 
 export const getJournalsService = () => {
   return api.get("/journals");

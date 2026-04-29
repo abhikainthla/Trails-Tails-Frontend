@@ -7,6 +7,7 @@
   --text: 31 41 55;            /* #1F2937 */
   --primary: 31 77 62;         /* #1F4D3E */
   --muted: 107 114 128;        /* #6B7280 */
+  --blur: 228 230 213          /*#e4e6d5*/
 }
 
 
@@ -14,6 +15,7 @@ body {
   background-color: var(--background);
   color: var(--text);
   @apply transition-all duration-300;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 /* 🌾 Grain Texture */

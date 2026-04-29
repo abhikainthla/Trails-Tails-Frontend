@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { commentJournalService, getJournalsService, likeJournalService } from "../services/journal.service";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   const [journals, setJournals] = useState([]);
@@ -22,8 +23,8 @@ export default function Home() {
   };
 
   return (
-    <div className="p-4">
-        <h1 className="text-blue-500">hello</h1>
+    <div>
+      <Navbar/>
       {journals.map((j) => (
         <div key={j._id} className="border p-4 mb-4 rounded">
           <h2 className="text-xl font-bold">{j.title}</h2>

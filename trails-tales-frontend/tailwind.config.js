@@ -10,6 +10,11 @@ export default {
         text: "rgb(var(--text) / <alpha-value>)",
         primary: "rgb(var(--primary) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
+        blur:"rgb(var(--blur) / <alpha-value>)",
+      },
+      fontFamily: {
+        lora: ['Lora', 'serif'],
+        nunito: ['Nunito Sans', 'serif'],
       },
     },
   },
