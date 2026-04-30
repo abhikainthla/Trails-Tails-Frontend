@@ -1,21 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { CiCalendar, CiGlobe, CiImageOn, CiLocationOn } from "react-icons/ci";
 import { GoTag } from "react-icons/go";
 import Navbar from "../components/Navbar";
 import { createJournalService } from "../services/journal.service";
+import { useLocation } from "react-router-dom";
 
 export default function CreateJournal() {
+  const locationHook = useLocation();
+  const params = new URLSearchParams(locationHook.search);
+
   const [images, setImages] = useState([]);
 
   const [form, setForm] = useState({
     title: "",
     story: "",
     location: "",
+    lat: "",
+    lng: "",
     date: "",
     tags: "",
     visibility: "public"
   });
+
+  const getCoordinates = async (place) => {
+  const res = await fetch(
+    `https://nominatim.openstreetmap.org/search?q=${place}&format=json`
+  );
+  const data = await res.json();
+
+  if (data.length > 0) {
+    return {
+      lat: data[0].lat,
+      lng: data[0].lon,
+    };
+  }
+  return null;
+};
+
+useEffect(() => {
+  const lat = params.get("lat");
+  const lng = params.get("lng");
+  const name = params.get("name");
+
+  if (lat && lng) {
+    setForm((prev) => ({
+      ...prev,
+      lat,
+      lng,
+      location: name || "",
+    }));
+  }
+}, []);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -33,6 +69,13 @@ const handleSubmit = async (e) => {
     images.forEach((img) => {
       formData.append("images", img);
     });
+    const coords = await getCoordinates(form.location);
+
+    if (coords) {
+      formData.append("lat", coords.lat);
+      formData.append("lng", coords.lng);
+    }
+
 
     await createJournalService(formData);
 
