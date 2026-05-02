@@ -1,8 +1,12 @@
 import api from "../api/axios";
 
-// ✅ CRUD
-export const createJournalService = (data) => {
-  return api.post("/journals", data );
+//  CRUD
+export const createJournalService = async (data) => {
+  return api.post("/journals", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 

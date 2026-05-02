@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Added useNavigate
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
-import { Bookmark, Calendar, Heart, MapPin, MessageCircle, Share2, ArrowLeft } from "lucide-react"; // Added ArrowLeft
+import { Bookmark, Calendar, Heart, MapPin, MessageCircle, Share2, ArrowLeft, Plus } from "lucide-react"; // Added ArrowLeft
+import Footer from "../components/Footer";
+import AddToTripModal from "../components/AddToTripModal";
 
 const JournalDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate(); // Initialize navigate
   const [journal, setJournal] = useState(null);
   const [comment, setComment] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     fetchJournal();
@@ -123,6 +127,13 @@ const JournalDetail = () => {
             <button className="text-primary hover:opacity-60 transition-opacity">
                 <Bookmark size={18} />
             </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="text-primary hover:opacity-60 transition-opacity"
+            >
+              <Plus size={18}/>
+            </button>
+
 
             <button className="text-primary hover:opacity-60 transition-opacity pr-4">
                 <Share2 size={18} />
@@ -163,6 +174,14 @@ const JournalDetail = () => {
       </article>
       
       <div className="h-24" />
+      {showModal && (
+        <AddToTripModal
+          journalId={id}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+
+      <Footer/>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import Footer from "../components/Footer";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -143,6 +144,7 @@ const Map = () => {
           📍 Nearby
         </button>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import api from "../api/axios";
 import FeedCard from "../components/FeedCard";
+import Footer from "../components/Footer";
 
 const Feed = () => {
   const [journals, setJournals] = useState([]);
@@ -81,6 +82,7 @@ const Feed = () => {
 
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

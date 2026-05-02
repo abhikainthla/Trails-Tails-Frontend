@@ -5,10 +5,12 @@ import { GoTag } from "react-icons/go";
 import Navbar from "../components/Navbar";
 import { createJournalService } from "../services/journal.service";
 import { useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function CreateJournal() {
   const locationHook = useLocation();
   const params = new URLSearchParams(locationHook.search);
+  const [loading, setLoading] = useState(false);
 
   const [images, setImages] = useState([]);
 
@@ -56,9 +58,17 @@ useEffect(() => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  try {
-    const formData = new FormData();
+  if (!form.title || !form.story) {
+    alert("Title and story are required");
+    return;
+  }
 
+  try {
+    setLoading(true);
+
+    const coords = await getCoordinates(form.location);
+
+    const formData = new FormData();
     formData.append("title", form.title);
     formData.append("story", form.story);
     formData.append("location", form.location);
@@ -66,22 +76,26 @@ const handleSubmit = async (e) => {
     formData.append("tags", form.tags);
     formData.append("visibility", form.visibility);
 
-    images.forEach((img) => {
-      formData.append("images", img);
-    });
-    const coords = await getCoordinates(form.location);
-
     if (coords) {
       formData.append("lat", coords.lat);
       formData.append("lng", coords.lng);
     }
 
+    images.forEach((img) => {
+      formData.append("images", img);
+    });
 
     await createJournalService(formData);
 
-    alert("Journal created!");
+    alert("Journal created successfully 🚀");
+
+    // redirect
+    window.location.href = "/feed";
   } catch (err) {
     console.error(err);
+    alert(err?.response?.data?.message || "Something went wrong");
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -214,11 +228,19 @@ const handleSubmit = async (e) => {
           {/* Footer Actions */}
           <div className="flex justify-end gap-4 pt-6">
             <button type="button" className="px-6 py-2 font-semibold text-text rounded-full bg-white/50">Save draft</button>
-            <button type="submit" className="px-6 py-2 bg-primary text-white rounded-full font-semibold">Publish entry</button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="px-6 py-2 bg-primary text-white rounded-full font-semibold disabled:opacity-50"
+            >
+              {loading ? "Publishing..." : "Publish entry"}
+            </button>
+
           </div>
         </form>
       </div>
     </div>
+    <Footer/>
     </>
 
   );
