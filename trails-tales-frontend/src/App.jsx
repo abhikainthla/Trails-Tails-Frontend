@@ -13,6 +13,8 @@ import JournalDetail from "./pages/JournalDetail";
 import Trips from "./pages/Trips";
 import CreateTrip from "./pages/CreateTrip";
 import CompleteProfile from "./pages/CompleteProfile";
+import Travelers from "./pages/Travelers";
+import ProfileEdit from "./pages/ProfileEdit";
 
 function App() {
   const fetchUser = useAuthStore((state) => state.fetchUser);
@@ -43,8 +45,10 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/create" element={<CreateJournal />} />
       <Route path="/trips" element={<Trips />} />
+      <Route path="/travelers" element={<Travelers />} />
       <Route path="/create-trip" element={<CreateTrip />} />
       <Route path="/profile/:id" element={<Profile />} />
+      <Route path="/edit-profile" element={<ProfileEdit />} />
       <Route path="/complete-profile" element={<CompleteProfile />} />
     </Routes>
   );

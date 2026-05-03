@@ -9,12 +9,33 @@ export default function Navbar() {
   const user = useAuthStore((state) => state.user);
   const navItems = ["Feed", "Map", "Trips", "Travelers"];
   const [notifications, setNotifications] = useState([]);
+  const [open, setOpen] = useState(false);
+
 
 useEffect(() => {
-  api.get("/notifications") 
-    .then((res) => setNotifications(res.data))
-    .catch((err) => console.error(err));
+  api.get("/notifications").then(res => setNotifications(res.data));
 }, []);
+
+const unreadCount = notifications.filter(n => !n.isRead).length;
+
+const markRead = async () => {
+  await api.put("/notifications/read");
+  setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+};
+
+const formatMessage = (n) => {
+  switch (n.type) {
+    case "follow":
+      return `👤 ${n.message}`;
+    case "like":
+      return `❤️ ${n.message}`;
+    case "comment":
+      return `💬 ${n.message}`;
+    default:
+      return n.message;
+  }
+};
+
 
 
   return (
@@ -77,14 +98,41 @@ useEffect(() => {
         )}
 
         <div className="relative">
-  <Bell className="cursor-pointer" />
+          <Bell
+            className="cursor-pointer"
+            onClick={() => {
+              setOpen(!open);
+              markRead();
+            }}
+          />
 
-      {notifications.length > 0 && (
-        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">
-          {notifications.length}
-        </span>
-      )}
-    </div>
+          {unreadCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">
+              {unreadCount}
+            </span>
+          )}
+
+          {open && (
+            <div className="absolute right-0 mt-3 w-80 bg-white shadow-xl rounded-xl border z-50 max-h-96 overflow-y-auto">
+              
+              {notifications.length === 0 ? (
+                <p className="p-4 text-gray-500 text-sm">No notifications</p>
+              ) : (
+                notifications.map((n) => (
+                  <div
+                    key={n._id}
+                    className={`p-3 border-b text-sm ${
+                      n.isRead ? "bg-white" : "bg-gray-100"
+                    }`}
+                  >
+                    {formatMessage(n)}
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+
 
       </div>
     </nav>

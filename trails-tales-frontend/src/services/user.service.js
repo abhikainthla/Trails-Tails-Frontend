@@ -15,3 +15,7 @@ export const updateProfileService = (data) => {
 export const followUserService = (id) => {
   return api.post(`/users/${id}/follow`);
 };
+
+export const getTravelersService = () => {
+  return api.get("/users");
+};
