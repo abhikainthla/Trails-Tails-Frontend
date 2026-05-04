@@ -104,6 +104,22 @@ const JournalDetail = () => {
             {journal.story}
           </p>
         </div>
+        {journal.images?.length > 1 && (
+          <div className="mt-12">
+            <h3 className="text-lg font-serif mb-4">Moments captured</h3>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {journal.images.slice(1).map((img, i) => (
+                <img
+                  key={i}
+                  src={img}
+                  className="w-full h-60 object-cover rounded-xl hover:scale-105 transition"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
 
         {/* INTERACTION BAR */}
         <div className="flex items-center bg-white rounded-full px-2 py-2 w-fit mx-auto gap-6 shadow-sm border border-black/5 my-16">

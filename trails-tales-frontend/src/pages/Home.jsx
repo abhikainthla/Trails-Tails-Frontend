@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getJournalsService } from "../services/journal.service";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { MoveRight } from "lucide-react";
 
 export default function Home() {
   const [journals, setJournals] = useState([]);
@@ -76,9 +77,12 @@ export default function Home() {
 
       {/* ================= WEEKLY TALES ================= */}
       <section className="max-w-6xl mx-auto mt-16 px-6">
-        <h2 className="text-xl font-semibold mb-6">
-          This week’s tales
-        </h2>
+        <p className="text-xs uppercase text-gray-500 tracking-widest">
+              Field notes
+            </p>
+            <h1 className="text-5xl font-lora text-text mb-4">
+              This week's tales
+            </h1>
 
         <div className="grid md:grid-cols-3 gap-6">
           {journals.map((j) => (
@@ -103,19 +107,22 @@ export default function Home() {
       </section>
 
       {/* ================= FEATURES ================= */}
-      <section className="max-w-5xl mx-auto mt-20 px-6 text-center">
-        <h2 className="text-lg font-semibold mb-8">
-          A journal that knows where it’s been.
-        </h2>
+      <section className="max-w-5xl mx-auto mt-20 px-6 text-justify">
+        <p className="text-xs uppercase text-gray-500 tracking-widest">
+              How it works
+            </p>
+            <h1 className="text-5xl font-lora text-text mb-4">
+              A journal that knows where it's been.
+            </h1>
 
         <div className="grid md:grid-cols-3 gap-6">
           <Feature
             title="Write the story"
-            desc="Capture your travel moments beautifully."
+            desc="Markdown, photos, and the date. Tag it, set who can see it. That's it"
           />
           <Feature
             title="Pin it to the world"
-            desc="Attach your story to real locations."
+            desc="Every entry drops a pin. Watch your atlas grow trip by trip."
           />
           <Feature
             title="Let it live"
@@ -126,14 +133,14 @@ export default function Home() {
 
       {/* ================= CTA ================= */}
       <section className="max-w-4xl mx-auto mt-20 px-6">
-        <div className="bg-gradient-to-r from-green-900 to-green-700 text-white p-10 rounded-2xl text-center mb-20">
+        <div className="bg-gradient-to-r from-green-900 to-green-700 text-white p-16 rounded-2xl text-center mb-20">
           <h2 className="text-4xl text-justify w-[450px] font-lora font-semibold mb-2">
             Your next trip deserves a better notebook.
           </h2>
           <p className="text-justify">Start writing in 30 seconds. Free, forever, for the kind of stories worth keeping.</p>
 
-          <button className="mt-6 bg-white text-black px-6 py-2 rounded-full text-sm ">
-            Start writing
+          <button className=" flex items-center gap-2 mt-6 bg-white text-black px-6 py-2 rounded-full text-sm ">
+            Start writing <MoveRight size={16} />
           </button>
         </div>
       </section>

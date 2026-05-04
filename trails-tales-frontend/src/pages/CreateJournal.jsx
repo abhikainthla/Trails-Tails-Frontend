@@ -118,8 +118,9 @@ const handleSubmit = async (e) => {
               accept="image/*"
               className="hidden"
               id="fileUpload"
-              onChange={(e) => setImages([...e.target.files])}
-
+              onChange={(e) =>
+                setImages((prev) => [...prev, ...Array.from(e.target.files)])
+              }
             />
 
             <label htmlFor="fileUpload" className="flex flex-col items-center cursor-pointer">
@@ -135,11 +136,21 @@ const handleSubmit = async (e) => {
           {images.length > 0 && (
             <div className="grid grid-cols-3 gap-2">
               {images.map((img, i) => (
-                <img
-                  key={i}
-                  src={URL.createObjectURL(img)}
-                  className="h-24 w-full object-cover rounded-lg"
-                />
+                <div key={i} className="relative">
+                  <img
+                    src={URL.createObjectURL(img)}
+                    className="h-24 w-full object-cover rounded-lg"
+                  />
+
+                  <button
+                    onClick={() =>
+                      setImages(images.filter((_, index) => index !== i))
+                    }
+                    className="absolute top-1 right-1 bg-black/60 text-white text-xs px-2 rounded-full"
+                  >
+                    ✕
+                  </button>
+                </div>
               ))}
             </div>
           )}
