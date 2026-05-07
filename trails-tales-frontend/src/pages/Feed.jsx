@@ -54,7 +54,7 @@ const Feed = () => {
             />
           </div>
 
-          {/* 🏷 Tags */}
+          {/*  Tags */}
           <div className="flex gap-2 mb-6 flex-wrap">
             {["All", "Mountains", "Beach", "Forest", "City"].map((tag) => (
               <button

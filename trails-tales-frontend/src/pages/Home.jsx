@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getJournalsService } from "../services/journal.service";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { MoveRight } from "lucide-react";
+import { Astroid, BookOpen, MapPin, MoveRight } from "lucide-react";
 
 export default function Home() {
   const [journals, setJournals] = useState([]);
@@ -116,18 +116,33 @@ export default function Home() {
             </h1>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <Feature
-            title="Write the story"
-            desc="Markdown, photos, and the date. Tag it, set who can see it. That's it"
-          />
-          <Feature
-            title="Pin it to the world"
-            desc="Every entry drops a pin. Watch your atlas grow trip by trip."
-          />
-          <Feature
-            title="Let it live"
-            desc="Share your journeys with others."
-          />
+          <div className="flex flex-col bg-white rounded-xl gap-2 p-6">
+            <div className="flex items-center gap-2">
+            <p className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm"><BookOpen size={18} className="text-white text-lg" /></p> 
+            <span className="text-muted">01</span>
+            </div>
+
+            <h2 className="text-2xl font-lora">Write the entry</h2>
+            <p className="xs">Markdown, photos, and the date. Tag it, set who can see it. That's it.</p>
+          </div>
+          <div className="flex flex-col bg-white rounded-xl gap-2 p-6">
+            <div className="flex items-center gap-2">
+            <p className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm"><MapPin size={18} className="text-white text-lg" /></p> 
+            <span className="text-muted">02</span>
+            </div>
+
+            <h2 className="text-2xl font-lora">Pin it to the world</h2>
+            <p className="xs">Every entry drops a pin. Watch your atlas grow trip by trip.</p>
+          </div>
+          <div className="flex flex-col bg-white rounded-xl gap-2 p-6">
+            <div className="flex items-center gap-2">
+            <p className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm"><Astroid size={18} className="text-white text-lg" /></p> 
+            <span className="text-muted">03</span>
+            </div>
+
+            <h2 className="text-2xl font-lora">Let AI help</h2>
+            <p className="xs">Caption photos, polish prose, get recs for what's nearby — without losing your voice.</p>
+          </div>
         </div>
       </section>
 
