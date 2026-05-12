@@ -2,21 +2,29 @@ import { useEffect, useState } from "react";
 import { getJournalsService } from "../services/journal.service";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Astroid, BookOpen, MapPin, MoveRight } from "lucide-react";
+import { Astroid, BookOpen, MapPin, MoveRight, Users  } from "lucide-react";
+import { getTravelersService } from "../services/user.service";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [journals, setJournals] = useState([]);
+  const [travelers, setTravelers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getJournalsService();
-      setJournals(res.data.slice(0, 3)); // only top 3 like UI
+      setJournals(res.data.slice(0, 3));
+
+      const travelersRes = await getTravelersService();
+      setTravelers(travelersRes.data.slice(0, 4));
     };
+
     fetchData();
   }, []);
 
   return (
-    <div className="bg-grain min-h-screen font-sans selection:bg-primary selection:text-white">
+    <div className="bg-grain min-h-screen selection:bg-primary selection:text-white">
       <Navbar />
 
       {/* ================= HERO ================= */}
@@ -54,10 +62,10 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <button className="bg-primary hover:bg-primary/90 transition-all px-8 py-3.5 rounded-full text-white font-medium flex items-center gap-2 shadow-lg shadow-primary/20">
+              <button onClick={() => navigate("/feed")} className="bg-primary hover:bg-primary/90 transition-all px-8 py-3.5 rounded-full text-white font-medium flex items-center gap-2 shadow-lg shadow-primary/20">
                 Wander the feed <span className="text-lg">→</span>
               </button>
-              <button className="bg-white/80 hover:bg-white transition-all backdrop-blur-md border border-white/50 px-8 py-3.5 rounded-full text-primary font-medium shadow-sm">
+              <button onClick={() => navigate("/map")} className="bg-white/80 hover:bg-white transition-all backdrop-blur-md border border-white/50 px-8 py-3.5 rounded-full text-primary font-medium shadow-sm">
                 Open the map
               </button>
             </div>
@@ -77,18 +85,30 @@ export default function Home() {
 
       {/* ================= WEEKLY TALES ================= */}
       <section className="max-w-6xl mx-auto mt-16 px-6">
+        <div className="flex justify-between items-start">
+          <div>
+
         <p className="text-xs uppercase text-gray-500 tracking-widest">
               Field notes
             </p>
             <h1 className="text-5xl font-lora text-text mb-4">
               This week's tales
             </h1>
+          </div>
+          <button
+            onClick={() => navigate("/feed")}
+            className="hidden md:flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+          >
+            Browse all →
+          </button>
+          </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {journals.map((j) => (
             <div
               key={j._id}
               className="rounded-xl overflow-hidden shadow bg-white group"
+              onClick={() => navigate(`/journal/${j._id}`)}
             >
               <img
                 src={j.images?.[0]}
@@ -107,7 +127,7 @@ export default function Home() {
       </section>
 
       {/* ================= FEATURES ================= */}
-      <section className="max-w-5xl mx-auto mt-20 px-6 text-justify">
+      <section className="max-w-6xl mx-auto mt-16 px-6">
         <p className="text-xs uppercase text-gray-500 tracking-widest">
               How it works
             </p>
@@ -116,7 +136,7 @@ export default function Home() {
             </h1>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="flex flex-col bg-white rounded-xl gap-2 p-6">
+          <div className="flex flex-col bg-white/90 backdrop-blur-xl rounded-xl gap-2 p-6">
             <div className="flex items-center gap-2">
             <p className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm"><BookOpen size={18} className="text-white text-lg" /></p> 
             <span className="text-muted">01</span>
@@ -125,7 +145,7 @@ export default function Home() {
             <h2 className="text-2xl font-lora">Write the entry</h2>
             <p className="xs">Markdown, photos, and the date. Tag it, set who can see it. That's it.</p>
           </div>
-          <div className="flex flex-col bg-white rounded-xl gap-2 p-6">
+          <div className="flex flex-col bg-white/90 backdrop-blur-xl rounded-xl gap-2 p-6">
             <div className="flex items-center gap-2">
             <p className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm"><MapPin size={18} className="text-white text-lg" /></p> 
             <span className="text-muted">02</span>
@@ -134,7 +154,7 @@ export default function Home() {
             <h2 className="text-2xl font-lora">Pin it to the world</h2>
             <p className="xs">Every entry drops a pin. Watch your atlas grow trip by trip.</p>
           </div>
-          <div className="flex flex-col bg-white rounded-xl gap-2 p-6">
+          <div className="flex flex-col bg-white/90 backdrop-blur-xl rounded-xl gap-2 p-6">
             <div className="flex items-center gap-2">
             <p className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-sm"><Astroid size={18} className="text-white text-lg" /></p> 
             <span className="text-muted">03</span>
@@ -146,15 +166,105 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= COMMUNITY ================= */}
+      <section className="max-w-6xl mx-auto mt-16 px-6">
+        <div className="flex items-start justify-between mb-10">
+          <div>
+            <p className="text-xs uppercase text-gray-500 tracking-[0.25em] flex items-center gap-2">
+              <Users size={14} />
+              The community
+            </p>
+
+            <h1 className="text-5xl font-lora text-text mb-4">
+              Follow people who go places.
+            </h1>
+          </div>
+
+          <button
+            onClick={() => navigate("/travelers")}
+            className="hidden md:flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+          >
+            See all →
+          </button>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {travelers.map((user) => (
+            <div
+              key={user._id}
+              onClick={() => navigate(`/profile/${user._id}`)}
+              className="bg-white/90 backdrop-blur-xl border border-[#ece7dd] rounded-[2rem] p-7 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+            >
+              {/* AVATAR */}
+              <img
+                src={
+                  user.avatar ||
+                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+                }
+                alt={user.name}
+                className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-md"
+              />
+
+              {/* NAME */}
+              <div className="mt-6">
+                <h2 className="text-xl font-lora text-[#102414] leading-none">
+                  {user.name}
+                </h2>
+
+                <p className="text-sm text-gray-500 mt-2">
+                  @{user.username}
+                </p>
+              </div>
+
+              {/* BIO */}
+              <p className="text-[14px] leading-7 text-[#374151] mt-6 min-h-[90px]">
+                {user.bio || "Traveler collecting stories around the world."}
+              </p>
+
+              {/* STATS */}
+              <div className="flex items-center justify-between mt-8">
+                <div>
+                  <span className="font-bold text-[#102414]">
+                    {user.totalPosts || 0}
+                  </span>
+
+                  <span className="text-gray-500 text-sm ml-1">
+                    places
+                  </span>
+                </div>
+
+                <div>
+                  <span className="font-bold text-[#102414]">
+                    {user.followersCount || 0}
+                  </span>
+
+                  <span className="text-gray-500 text-sm ml-1">
+                    followers
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* MOBILE BUTTON */}
+        <button
+          onClick={() => navigate("/travelers")}
+          className="md:hidden mt-8 flex items-center gap-2 text-primary font-medium"
+        >
+          See all →
+        </button>
+      </section>
+
       {/* ================= CTA ================= */}
-      <section className="max-w-4xl mx-auto mt-20 px-6">
+      <section className="max-w-6xl mx-auto mt-16 px-6">
         <div className="bg-gradient-to-r from-green-900 to-green-700 text-white p-16 rounded-2xl text-center mb-20">
           <h2 className="text-4xl text-justify w-[450px] font-lora font-semibold mb-2">
             Your next trip deserves a better notebook.
           </h2>
           <p className="text-justify">Start writing in 30 seconds. Free, forever, for the kind of stories worth keeping.</p>
 
-          <button className=" flex items-center gap-2 mt-6 bg-white text-black px-6 py-2 rounded-full text-sm ">
+          <button onClick={() => navigate("/create")} className=" flex items-center gap-2 mt-6 bg-white text-black px-6 py-2 rounded-full text-sm ">
             Start writing <MoveRight size={16} />
           </button>
         </div>
