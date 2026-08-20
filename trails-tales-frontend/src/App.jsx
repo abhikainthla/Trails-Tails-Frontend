@@ -27,13 +27,15 @@ function App() {
     if (token) {
       fetchUser();
     }
-  }, [token]);
+  }, [token, fetchUser]);
 
   useEffect(() => {
     if (user && !user.isProfileComplete) {
-      navigate("/complete-profile");
+      navigate("/complete-profile", {
+        replace: true,
+      });
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <Routes>

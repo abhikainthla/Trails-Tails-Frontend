@@ -1,14 +1,49 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: "http://localhost:5000/api",
   withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+  (response) => response,
+
+  (error) => {
+    if (!error.response) {
+      console.error(
+        "API CONNECTION ERROR:",
+        error.message
+      );
+    }
+
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+
+      // Don't force redirect from here.
+      // Let Zustand/App handle authentication state.
+      window.dispatchEvent(
+        new Event("auth-expired")
+      );
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default api;

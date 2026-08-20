@@ -7,3 +7,9 @@ export const registerService = (data) => {
 export const loginService = (data) => {
   return api.post("/auth/login", data);
 };
+
+export const updateInterestsService = (interests) => {
+  return api.put("/auth/interests", {
+    interests,
+  });
+};
